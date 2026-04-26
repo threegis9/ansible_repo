@@ -36,6 +36,22 @@
         state: latest
       when: ansible_facts["distribution"] == "Ubuntu"
 
+    - name: change e-mail address for admin
+      tags: apache,centos,httpd
+      lineinfile: 
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^ServerAdmin'
+        line: ServerAdmin somebody@somewhere.net
+      when: ansible_facts["distribution"] == "Rocky"
+      register: httpd
+
+    - name: restart httpd (Rocky)
+      tags: apache,rocky,httpd
+      service:
+        name: httpd
+        state: restarted
+      when: httpd.changed
+
     - name: copy default html file for site
       tags: apache,apache2,httpd
       copy:
@@ -52,6 +68,14 @@
           - httpd
           - php
         state: latest
+      when: ansible_facts["distribution"] == "Rocky"
+
+    - name: start httpd (Rocky)
+      tags: apache,rocky,httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
       when: ansible_facts["distribution"] == "Rocky"
 
 - hosts: db_servers

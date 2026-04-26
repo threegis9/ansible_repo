@@ -6,7 +6,7 @@
 172.105.148.175
 
 [file_servers]
-172.105.148.175 
+74.207.227.222 
 
 [all:vars]
 ansible_user=threegis
