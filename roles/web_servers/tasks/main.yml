@@ -1,0 +1,40 @@
+- name: install apache and php for Ubuntu servers
+  tags: apache,apache2,ubuntu
+  apt:
+    name:
+      - apache2
+      - libapache2-mod-php
+    state: latest
+  when: ansible_facts["distribution"] == "Ubuntu"
+
+- name: install apache and php for Rocky servers
+  tags: apache,httpd,rocky,linux
+  dnf:
+    name:
+      - httpd
+      - php
+    state: latest
+  register: httpd
+  when: ansible_facts["distribution"] == "Rocky"
+
+- name: restart httpd (Rocky)
+  tags: apache,rocky,httpd
+  service:
+    name: httpd
+    state: restarted
+  when: httpd.changed
+
+- name: copy default html file for site
+  tags: apache,apache2,httpd
+  copy:
+    src: default_site.html
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: 0644
+
+
+
+
+
+    

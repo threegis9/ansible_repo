@@ -1,21 +1,12 @@
 [web_servers]
-66.228.62.146
-173.230.135.155
+173.230.135.155 ansible_python_interpreter=/usr/bin/python3
 
 [db_servers]
-172.105.148.175
+172.105.148.175 ansible_python_interpreter=/usr/bin/python3
 
 [file_servers]
-74.207.227.222 
+74.207.227.222 ansible_python_interpreter=/usr/bin/python3
 
-[all:vars]
-ansible_user=threegis
-ansible_python_interpreter=/usr/bin/python3
-
-
-
-
-
-
-
+[workstations]
+66.228.62.146 ansible_python_interpreter=/usr/bin/python3
 
